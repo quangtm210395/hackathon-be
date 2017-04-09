@@ -1,0 +1,40 @@
+{
+    "users" : [{
+        "username" : "quangtm",
+        "password" : "1234567",
+        "name" : "quang",
+        "age" : 22,
+        "role": "admin",
+        "permission" : [
+            {"post" : "delete"},
+            {"category" : "delete"},
+            {"user" : "delete"},
+            {"comment" : "delete"}
+        ]
+    },
+    {
+        "username" : "quangtm2",
+        "password" : "1234567",
+        "name" : "quang2",
+        "age" : 22,
+        "role": "user",
+        "permission" : [
+            {"post" : "edit"},
+            {"category" : "view"},
+            {"user" : "view"},
+            {"comment" : "delete"}
+        ]
+    },{
+        "username" : "quangtm3",
+        "password" : "1234567",
+        "name" : "quang3",
+        "age" : 22,
+        "role": "user",
+        "permission" : [
+            {"post" : "edit"},
+            {"category" : "view"},
+            {"user" : "view"},
+            {"comment" : "delete"}
+        ]
+    }]
+}
