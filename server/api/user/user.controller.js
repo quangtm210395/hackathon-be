@@ -15,12 +15,12 @@ module.exports = {
                         console.log(err);
                         res.status(400).json({
                             status: false,
-                            msg: err
+                            message: err.message
                         });
                     }
                     if (!user) res.status(404).json({
                         status: false,
-                        msg: "This account is not register"
+                        message: "This account is not register"
                     });
                     else {
                         if (user.authenticate(req.body.password)) {
@@ -31,13 +31,13 @@ module.exports = {
                             });
                             res.status(202).json({
                                 status: true,
-                                msg: "Login successful",
+                                message: "Login successful",
                                 token: token
                             });
                         } else {
                             res.status(403).json({
                                 status: false,
-                                msg: "Password incorrect"
+                                message: "Password incorrect"
                             });
                         }
                     }
@@ -45,7 +45,7 @@ module.exports = {
         } else {
             res.status(404).json({
                 status: false,
-                msg: "Cannot login!"
+                message: "Cannot login!"
             })
         }
 
@@ -65,10 +65,10 @@ module.exports = {
                     console.log(err);
                     res.status(400).json({
                         status: false,
-                        msg: "Not Found!"
+                        message: "Not Found!"
                     });
                 }
-                res.json(data);
+                res.json({status:  true, message: 'Found!', result: data});
             });
     },
 
@@ -82,14 +82,15 @@ module.exports = {
                     console.log('create successful!');
                     res.status(201).json({
                         status: true,
-                        insertedUser: user
+                        message: 'Create successful!',
+                        result: user
                     });
                 }
             });
         } else {
             res.status(400).json({
                 status: false,
-                msg: "Cannot create!"
+                message: "Cannot create!"
             });
         }
     },
@@ -113,7 +114,7 @@ module.exports = {
                         console.log(err);
                         res.status(400).json({
                             status: false,
-                            msg: "Not Found!"
+                            message: "Not Found!"
                         });
                     }
                     res.json(data);
@@ -121,7 +122,7 @@ module.exports = {
         } else {
             res.status(400).json({
                 status: false,
-                msg: "Not Found!"
+                message: "Not Found!"
             });
         }
     },
@@ -146,13 +147,13 @@ module.exports = {
                             throw err;
                             res.status(400).json({
                                 status: false,
-                                msg: 'Update Failed!'
+                                message: 'Update Failed!'
                             });
                         } else {
                             res.status(200).json({
                                 status: true,
-                                msg: "Edit successful!",
-                                updatedUser: updatedUser
+                                message: "Edit successful!",
+                                result: updatedUser
                             });
                         }
                     });
@@ -160,14 +161,14 @@ module.exports = {
                     console.log(err);
                     res.status(400).json({
                         status: false,
-                        msg: 'Cannot Edit!'
+                        message: 'Cannot Edit!'
                     });
                 }
             );
         } else {
             res.status(400).json({
                 status: false,
-                msg: 'Please input data to update'
+                message: 'Please input data to update'
             });
         }
     },
@@ -186,12 +187,12 @@ module.exports = {
                                 console.log(err);
                                 res.status(400).json({
                                     status: false,
-                                    msg: 'Cannot delete!'
+                                    message: 'Cannot delete!'
                                 });
                             } else {
                                 res.status(200).json({
                                     status: true,
-                                    msg: 'Delete successful!'
+                                    message: 'Delete successful!'
                                 });
                             }
                         });
@@ -199,14 +200,14 @@ module.exports = {
                         throw err;
                         res.status(400).json({
                             status: false,
-                            msg: 'Cannot delete!'
+                            message: 'Cannot delete!'
                         });
                     }
                 );
         } else {
             res.status(400).json({
                 status: false,
-                msg: "Not Found to delete!"
+                message: "Not Found to delete!"
             });
         }
     },

@@ -9,5 +9,5 @@ module.exports = (app) => {
     app.use('/api/post', postApi);
     app.use('/api/category', cateApi);
     app.use('/api/comment', commentApi);
-    app.use('/api/login', authApi);
+    app.use('/api/auth', authApi);
 }

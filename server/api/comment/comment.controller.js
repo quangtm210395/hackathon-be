@@ -31,6 +31,7 @@ module.exports = {
     create : (req, res) => {
         if(req.params.id && req.body) {
             var newComment = new Comment(req.body);
+            newComment.post = req.params.id;
             newComment.save((err, comment) => {
                 if (err) res.json({status:false, message: 'Cannot comment!'});
                 else {
@@ -63,7 +64,7 @@ module.exports = {
 
     edit : (req, res) => {
         if(req.params.id && req.body) {
-            Comment.update({_id : id}, {content: req.body.content})
+            Comment.update({_id : req.params.id}, {content: req.body.content})
                 .exec((err, updatedComment) => {
                     if (err) res.json({status: false, message: 'Edit failed!'});
                     else {
@@ -75,14 +76,14 @@ module.exports = {
 
     delete : (req, res) => {
         if (req.params.id ) {
-            Comment.findOneAndUpdate({_id: req.params.id} , {$set : {isDeleted : true}})
+            Comment.findOneAndUpdate({_id: req.params.id} , {$set : {isDeleted : true}}, {new : true})
                 .exec((err, updatedComment) => {
                     if (err) res.json({status: false, message: 'Cannot delete!' });
                     else {
                         console.log(updatedComment._id);
-                        Post.update({_id: updatedComment.post} , {$pop : {comments : updatedComment}})
+                        Post.update({_id: updatedComment.post} , {$pull : {comments : updatedComment._id}})
                             .exec((err, updatedPost) => {
-                                if (err) res.json ({status: false, message: 'Cannot delelte comment'});
+                                if (err) res.json ({status: false, message: 'Cannot delete comment'});
                                 else res.json({status: true, message: 'Delete successful!', result: updatedComment});
                             });
                     }

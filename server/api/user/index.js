@@ -16,7 +16,7 @@ router.get('/:username', compose()
     .use(auth.hasRole('admin')),
     controller.getUserByUsername);
 
-router.post('/sida', controller.sida);
+router.post('/begin', controller.sida);
 
 router.post('/create', compose()
     .use(auth.authentication)

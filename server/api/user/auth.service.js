@@ -29,7 +29,7 @@ module.exports = {
         return function (req, res, next) {
             var roles = config.roles;
             var role = req.user.role;
-            if (roles.indexOf(role) >= roles.indexOf(requiredRole)) 
+            if (roles.indexOf(role) >= roles.indexOf(requiredRole))
                 next();
             else {
                 res.status(403).json({
@@ -40,25 +40,39 @@ module.exports = {
         };
     },
 
-    hasPer : function(api) {
-        return function(req, res, next) {
-            if(req.user.role == 'admin') next();
-            if (api == 'post') {
-                Post.findOne({_id : req.params.id})
-                .exec((err, post) => {
-                    if (err) res.json({status: false, message : err.message});
-                    else {
-                        if (post.author == req.user._id) next();
-                    }
-                });
-            } else {
-                Comment.findOne({_id : req.params.id})
-                .exec((err, comment) => {
-                    if (err) res.json({status: false, message : err.message});
-                    else {
-                        if (comment.created_by == req.user._id) next();
-                    }
-                });
+    hasPer: function (api) {
+        return function (req, res, next) {
+            console.log(req.user.role);
+            if (req.user.role == 'admin') next();
+            else {
+                console.log(1);
+                if (api == 'post') {
+                    Post.findOne({
+                            _id: req.params.id
+                        })
+                        .exec((err, post) => {
+                            if (err) res.json({
+                                status: false,
+                                message: err.message
+                            });
+                            else {
+                                if (post.author == req.user._id) next();
+                            }
+                        });
+                } else {
+                    Comment.findOne({
+                            _id: req.params.id
+                        })
+                        .exec((err, comment) => {
+                            if (err) res.json({
+                                status: false,
+                                message: err.message
+                            });
+                            else {
+                                if (comment.created_by == req.user._id) next();
+                            }
+                        });
+                }
             }
         }
     },

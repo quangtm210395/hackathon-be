@@ -262,7 +262,7 @@ module.exports = {
                             User.update({
                                 _id: updatedPost.author
                             }, {
-                                $pop: {
+                                $pull: {
                                     created: updatedPost._id
                                 }
                             }).exec((err, updatedUser) => {
@@ -274,7 +274,7 @@ module.exports = {
                             Category.update({
                                 _id: updatedPost.category
                             }, {
-                                $pop: {
+                                $pull: {
                                     posts: updatedPost._id
                                 }
                             }).exec((err, updatedCate) => {
@@ -329,7 +329,7 @@ module.exports = {
             Post.update({
                 _id: req.params.id
             }, {
-                $pop: {
+                $pull: {
                     likes: req.user._id
                 }
             }).exec((err, updatedPost) => {
